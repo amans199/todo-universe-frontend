@@ -12,11 +12,12 @@ const RegisterPage = () => {
     axios
       .post("/user/register", {
         username,
-        email,
         password,
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userData", JSON.stringify(res.data.userData));
+        localStorage.setItem("tokenExp", JSON.stringify(res.data.tokenExp));
         window.location.href = "/";
       })
       .catch((err) => {
@@ -39,13 +40,13 @@ const RegisterPage = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
+        {/* <input
           type="email"
           placeholder="email"
           className="border-2 border-gray-300 p-2 rounded mb-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+        /> */}
         <input
           type="password"
           placeholder="Password"

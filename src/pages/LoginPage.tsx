@@ -9,13 +9,14 @@ export const LoginPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .post("/Login/Authorize", {
+      .post("user/login", {
         username,
         password,
       })
       .then((res) => {
-        console.log("🚀 ~ file: LoginPage.tsx ~ line 17 ~ .then ~ res", res);
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userData", JSON.stringify(res.data.userData));
+        localStorage.setItem("tokenExp", JSON.stringify(res.data.tokenExp));
         window.location.href = "/";
       })
       .catch((err) => {

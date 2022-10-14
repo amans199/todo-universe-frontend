@@ -33,9 +33,6 @@ export const TodoApp = () => {
   }, []);
 
   const getAllTodos = async () => {
-    // const response = await fetch(
-    //   `https://localhost:7144/api/Todos?${getFormattedSearchParams().join("&")}`
-    // );
     const response = await axios.get(
       `/Todos?${getFormattedSearchParams().join("&")}`,
       axiosHeaders
