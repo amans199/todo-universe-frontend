@@ -1,10 +1,19 @@
 // login page
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../utils/axios";
-
+import { useNavigate } from "react-router-dom";
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     window.location.href = "/login";
+  //   }
+  // }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,6 +56,12 @@ export const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="bg-blue-500 text-white p-2 rounded">Login</button>
+        <button
+          className="bg-blue-500 text-white p-2 rounded mt-2"
+          onClick={() => navigate("/register")}
+        >
+          Register
+        </button>
       </form>
     </div>
   );

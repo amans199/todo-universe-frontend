@@ -5,6 +5,7 @@ type Todo = {
   id: number;
   title: string;
   isComplete: boolean;
+  userId: number;
 };
 
 const axiosHeaders = {
@@ -29,6 +30,11 @@ export const TodoApp = () => {
     });
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+    }
+
     getAllTodos();
   }, []);
 
@@ -73,7 +79,7 @@ export const TodoApp = () => {
         allTodos={allTodos}
         deleteTodo={deleteTodo}
         editTodo={editTodo}
-        setTodoToEdit={(todo: Todo) => setTodoToEdit(todo)}
+        setTodoToEdit={(todo: Todo | null) => setTodoToEdit(todo)}
         todoToEdit={todoToEdit}
       />
 
@@ -83,7 +89,7 @@ export const TodoApp = () => {
         allTodos={allTodos}
         deleteTodo={deleteTodo}
         editTodo={editTodo}
-        setTodoToEdit={(todo: Todo) => setTodoToEdit(todo)}
+        setTodoToEdit={(todo: Todo | null) => setTodoToEdit(todo)}
         todoToEdit={todoToEdit}
       />
     </div>
@@ -102,7 +108,7 @@ const TodosListFiltersComponent = ({
   allTodos: Todo[];
   deleteTodo: (id: number) => void;
   editTodo: (todo: Todo) => void;
-  setTodoToEdit: (todo: Todo) => void;
+  setTodoToEdit: (todo: Todo | null) => void;
   todoToEdit: Todo | null;
   setSearchParams: (params: {
     id?: number;
@@ -160,7 +166,7 @@ const TodosListFiltersComponent = ({
             onChange={(e) => {
               setSearchParams({
                 ...searchParams,
-                id: e.target.value && parseInt(e.target.value),
+                id: e.target.value ? parseInt(e.target.value) : undefined,
               });
             }}
           />
@@ -228,7 +234,7 @@ const TodoListComponent = ({
   allTodos: Todo[];
   deleteTodo: (id: number) => void;
   editTodo: (todo: Todo) => void;
-  setTodoToEdit: (todo: Todo) => void;
+  setTodoToEdit: (todo: Todo | null) => void;
   todoToEdit: Todo | null;
   setSearchParams: (params: {
     id?: number;

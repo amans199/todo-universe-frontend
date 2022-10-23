@@ -1,11 +1,13 @@
 // login page
 import React, { useState } from "react";
 import axios from "../utils/axios";
-
+import { useNavigate } from "react-router-dom";
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,6 +57,12 @@ const RegisterPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="bg-blue-500 text-white p-2 rounded">Register</button>
+        <button
+          className="bg-blue-500 text-white p-2 rounded mt-2"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
       </form>
     </div>
   );
