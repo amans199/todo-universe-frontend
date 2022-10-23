@@ -48,4 +48,5 @@
 
 .on-hover-display-inside-dropdown:hover .dropdown,.on-hover-display-inside-dropdown .dropdown-wrapper:hover {
   display: block;
+  z-index:1;
 }

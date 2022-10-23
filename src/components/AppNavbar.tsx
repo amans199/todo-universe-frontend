@@ -29,11 +29,24 @@ const AppNavbar = ({ user }: { user?: UserDataType }) => {
             <div className="dropdown absolute right-0 w-40 bg-gray-800 rounded shadow-lg py-2 text-white">
               <div className="dropdown-wrapper py-2 ">
                 <button
+                  onClick={() => navigate("/")}
+                  className="block px-4 py-2 text-sm hover:bg-gray-700 w-100"
+                >
+                  Todos
+                </button>
+                <button
+                  onClick={() => navigate("/categories")}
+                  className="block px-4 py-2 text-sm hover:bg-gray-700 w-100"
+                >
+                  Categories
+                </button>
+                <button
                   onClick={() => navigate("/account")}
                   className="block px-4 py-2 text-sm hover:bg-gray-700 w-100"
                 >
                   Account
                 </button>
+
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm hover:bg-gray-700 "

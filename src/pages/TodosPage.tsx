@@ -5,7 +5,14 @@ type Todo = {
   id: number;
   title: string;
   isComplete: boolean;
-  userId: number;
+  CategoryId: number;
+};
+
+type TodosSearchParams = {
+  id?: number;
+  title?: String;
+  isComplete?: boolean;
+  [key: string]: any;
 };
 
 const axiosHeaders = {
@@ -17,12 +24,7 @@ const axiosHeaders = {
 export const TodoApp = () => {
   const [allTodos, setAllTodos] = useState<Todo[]>([]);
   const [todoToEdit, setTodoToEdit] = useState<Todo | null>(null);
-  const [searchParams, setSearchParams] = useState<{
-    id?: number;
-    title?: String;
-    isComplete?: boolean;
-    [key: string]: any;
-  }>({});
+  const [searchParams, setSearchParams] = useState<TodosSearchParams>({});
 
   const getFormattedSearchParams = () =>
     Object.keys(searchParams).map((key) => {
@@ -76,16 +78,9 @@ export const TodoApp = () => {
       <TodosListFiltersComponent
         setSearchParams={setSearchParams}
         searchParams={searchParams}
-        allTodos={allTodos}
-        deleteTodo={deleteTodo}
-        editTodo={editTodo}
-        setTodoToEdit={(todo: Todo | null) => setTodoToEdit(todo)}
-        todoToEdit={todoToEdit}
       />
 
       <TodoListComponent
-        setSearchParams={setSearchParams}
-        searchParams={searchParams}
         allTodos={allTodos}
         deleteTodo={deleteTodo}
         editTodo={editTodo}
@@ -97,25 +92,11 @@ export const TodoApp = () => {
 };
 
 const TodosListFiltersComponent = ({
-  allTodos,
-  deleteTodo,
-  editTodo,
-  setTodoToEdit,
-  todoToEdit,
   setSearchParams,
   searchParams,
 }: {
-  allTodos: Todo[];
-  deleteTodo: (id: number) => void;
-  editTodo: (todo: Todo) => void;
-  setTodoToEdit: (todo: Todo | null) => void;
-  todoToEdit: Todo | null;
-  setSearchParams: (params: {
-    id?: number;
-    title?: String;
-    isComplete?: boolean;
-  }) => void;
-  searchParams: { id?: number; title?: String; isComplete?: boolean };
+  setSearchParams: (params: TodosSearchParams) => void;
+  searchParams: TodosSearchParams;
 }) => {
   return (
     <div>
@@ -156,6 +137,7 @@ const TodosListFiltersComponent = ({
             }}
           />
         </div>
+        {/* TODO : add category filter and display category options from the backend  */}
         <div className="flex flex-col w-1/3">
           <label htmlFor="id">Id</label>
           <input
@@ -228,23 +210,13 @@ const TodoListComponent = ({
   editTodo,
   setTodoToEdit,
   todoToEdit,
-  setSearchParams,
-  searchParams,
 }: {
   allTodos: Todo[];
   deleteTodo: (id: number) => void;
   editTodo: (todo: Todo) => void;
   setTodoToEdit: (todo: Todo | null) => void;
   todoToEdit: Todo | null;
-  setSearchParams: (params: {
-    id?: number;
-    title?: String;
-    isComplete?: boolean;
-  }) => void;
-  searchParams: { id?: number; title?: String; isComplete?: boolean };
 }) => {
-  // TODO : add sort functionality by id and title alph. order
-  // TODO : add pagination
   return (
     <div className="w-full">
       <table className="w-full text-left">
@@ -252,6 +224,7 @@ const TodoListComponent = ({
           <tr>
             <th className="px-4 py-2 w-1/4">Id</th>
             <th className="px-4 py-2 w-1/2">Title</th>
+            {/* <th className="px-4 py-2 w-1/4">Category</th> */}
             <th className="px-4 py-2 w-1/4">IsComplete</th>
             <th className="px-4 py-2">Actions</th>
           </tr>
