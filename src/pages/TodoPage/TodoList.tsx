@@ -1,5 +1,10 @@
 import { formatDate, isColorDark } from "../../utils";
-import { TodoType, CategoryType, TodosFiltersType } from "../../types";
+import {
+  TodoType,
+  CategoryType,
+  TodosFiltersType,
+  SorterType,
+} from "../../types";
 
 export const TodoListComponent = ({
   allTodos,
@@ -8,6 +13,8 @@ export const TodoListComponent = ({
   setTodoToEdit,
   todoToEdit,
   allCategories,
+  setSearchParams,
+  searchParams,
 }: {
   allTodos: TodoType[];
   deleteTodo: (id: number) => void;
@@ -15,19 +22,149 @@ export const TodoListComponent = ({
   setTodoToEdit: (todo: TodoType | null) => void;
   todoToEdit: TodoType | null;
   allCategories: CategoryType[];
+  setSearchParams: (params: TodosFiltersType) => void;
+  searchParams: TodosFiltersType;
 }) => {
+  // param === 0 ? 1 : param === 1 ? 2 : 0;
+  const getSortValue = (param?: SorterType) => {
+    if (param === SorterType.NONE) return SorterType.ASC;
+    if (param === SorterType.ASC) return SorterType.DESC;
+    if (param === SorterType.DESC) return SorterType.NONE;
+    return SorterType.ASC;
+  };
+
   return (
     <div className="w-full">
       <table className="w-full text-left">
         <thead>
           <tr>
             <th className="px-4 py-2 w-1/4">Id</th>
-            <th className="px-4 py-2 w-1/2">Title</th>
+            <th
+              className="px-4 py-2 w-1/2 "
+              onClick={() => {
+                setSearchParams({
+                  ...searchParams,
+                  orderByTitle: getSortValue(searchParams?.orderByTitle),
+                });
+              }}
+            >
+              <div className="flex items-center">
+                <span className="cursor-pointer">Title</span>
+                <span
+                  className={`ml-2 text-gray-500 ${
+                    !searchParams?.orderByTitle && "hidden"
+                  }  ${
+                    searchParams?.orderByTitle === SorterType.NONE
+                      ? "hidden"
+                      : ""
+                  }`}
+                >
+                  <SortIcon
+                    classNames={
+                      searchParams?.orderByTitle === SorterType.ASC
+                        ? "transform rotate-180"
+                        : ""
+                    }
+                  />
+                </span>
+              </div>
+            </th>
             <th className="px-4 py-2 w-1/4">Category</th>
             <th className="px-4 py-2 w-1/4">IsComplete</th>
-            <th className="px-4 py-2 w-1/4">Created at</th>
-            <th className="px-4 py-2 w-1/4">Updated at</th>
-            <th className="px-4 py-2 w-1/4">Reminder</th>
+            <th
+              className="px-4 py-2 w-1/4"
+              onClick={() => {
+                setSearchParams({
+                  ...searchParams,
+                  orderByCreatedAt: getSortValue(
+                    searchParams?.orderByCreatedAt
+                  ),
+                });
+              }}
+            >
+              <div className="flex items-center">
+                <span className="cursor-pointer">Created at</span>
+                <span
+                  className={`ml-2 text-gray-500  ${
+                    !searchParams?.orderByCreatedAt && "hidden"
+                  } ${
+                    searchParams?.orderByCreatedAt === SorterType.NONE
+                      ? "hidden"
+                      : ""
+                  }`}
+                >
+                  <SortIcon
+                    classNames={
+                      searchParams?.orderByCreatedAt === SorterType.ASC
+                        ? "transform rotate-180"
+                        : ""
+                    }
+                  />
+                </span>
+              </div>
+            </th>
+            <th
+              className="px-4 py-2 w-1/4"
+              onClick={() => {
+                setSearchParams({
+                  ...searchParams,
+                  orderByUpdatedAt: getSortValue(
+                    searchParams?.orderByUpdatedAt
+                  ),
+                });
+              }}
+            >
+              <div className="flex items-center">
+                <span className="cursor-pointer">Updated at</span>
+                <span
+                  className={`ml-2 text-gray-500  ${
+                    !searchParams?.orderByUpdatedAt && "hidden"
+                  }  ${
+                    searchParams?.orderByUpdatedAt === SorterType.NONE
+                      ? "hidden"
+                      : ""
+                  }`}
+                >
+                  <SortIcon
+                    classNames={
+                      searchParams?.orderByUpdatedAt === SorterType.ASC
+                        ? "transform rotate-180"
+                        : ""
+                    }
+                  />
+                </span>
+              </div>
+            </th>
+            <th
+              className="px-4 py-2 w-1/4"
+              onClick={() => {
+                setSearchParams({
+                  ...searchParams,
+                  orderByRemindAt: getSortValue(searchParams?.orderByRemindAt),
+                });
+              }}
+            >
+              <div className="flex items-center">
+                <span className="cursor-pointer">Remind at</span>
+                <span
+                  className={`ml-2 text-gray-500   ${
+                    !searchParams?.orderByRemindAt && "hidden"
+                  }  ${
+                    searchParams?.orderByRemindAt === SorterType.NONE
+                      ? "hidden"
+                      : ""
+                  }`}
+                >
+                  <SortIcon
+                    classNames={
+                      searchParams?.orderByRemindAt === SorterType.ASC
+                        ? "transform rotate-180"
+                        : ""
+                    }
+                  />
+                </span>
+              </div>
+            </th>
             <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
@@ -227,5 +364,22 @@ export const TodoListComponent = ({
         </tbody>
       </table>
     </div>
+  );
+};
+
+const SortIcon = ({ classNames }: { classNames?: string }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`h-6 w-6 ${classNames}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+        clipRule="evenodd"
+      />
+    </svg>
   );
 };

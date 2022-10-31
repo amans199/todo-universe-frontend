@@ -54,6 +54,10 @@ export const TodoApp = () => {
     searchParams.title,
     searchParams.isComplete,
     searchParams.categoryId,
+    searchParams.orderByTitle,
+    searchParams.orderByCreatedAt,
+    searchParams.orderByRemindAt,
+    searchParams.orderByUpdatedAt,
   ]);
 
   const deleteTodo = async (id: number) => {
@@ -89,6 +93,8 @@ export const TodoApp = () => {
         setTodoToEdit={(todo: TodoType | null) => setTodoToEdit(todo)}
         todoToEdit={todoToEdit}
         allCategories={allCategories}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
     </div>
   );

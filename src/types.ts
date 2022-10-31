@@ -22,11 +22,22 @@ export type TodoType = {
   categoryId?: number;
 };
 
+
+export enum SorterType {
+  NONE = 0,
+  ASC = 1,
+  DESC = 2,
+}
+
 export type TodosFiltersType = {
   id?: number;
   title?: String;
   isComplete?: boolean;
   categoryId?: number;
+  orderByTitle?: SorterType;
+  orderByCreatedAt?: SorterType;
+  orderByUpdatedAt?: SorterType;
+  orderByRemindAt?: SorterType;
   [key: string]: any;
 };
 
