@@ -1,23 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "../utils/axios";
+import { axiosHeaders } from "../utils";
+import { UserDataType } from "../types";
 
-type UserDataType = {
-  id: number;
-  userName: string;
-  password: string;
-  avatar: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-};
 // create account page using tailwind and typescript
 // display data from UserDataType and display button to edit it
-const axiosHeaders = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-};
 
 const AccountPage = () => {
   const userData: UserDataType = localStorage.getItem("userData")

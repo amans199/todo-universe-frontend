@@ -1,5 +1,5 @@
 import "./App.css";
-import TodosPage from "./pages/TodosPage";
+import TodosPage from "./pages/TodoPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AppNavbar from "./components/AppNavbar";

@@ -8,3 +8,29 @@ export type UserDataType = {
   lastName: string;
   role: string;
 };
+
+
+
+export type TodoType = {
+  id: number;
+  title: string;
+  isComplete: boolean;
+  category?: CategoryType;
+  categoryId?: number;
+};
+
+export type TodosFiltersType = {
+  id?: number;
+  title?: String;
+  isComplete?: boolean;
+  categoryId?: number;
+  [key: string]: any;
+};
+
+export type CategoryType = {
+  id: number;
+  name: string;
+  description: string;
+  color: string;
+  userId: number;
+};
