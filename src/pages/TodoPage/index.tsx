@@ -4,12 +4,7 @@ import { TodoType, CategoryType, TodosFiltersType } from "../../types";
 import { TodoFormComponent } from "./TodoForm";
 import { TodosListFiltersComponent } from "./TodosFilters";
 import { TodoListComponent } from "./TodoList";
-
-const axiosHeaders = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-};
+import { axiosHeaders } from "../../utils";
 
 export const TodoApp = () => {
   const [allTodos, setAllTodos] = useState<TodoType[]>([]);

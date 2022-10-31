@@ -15,6 +15,9 @@ export type TodoType = {
   id: number;
   title: string;
   isComplete: boolean;
+  createdAt:  Date;
+  updatedAt: Date;
+  remindAt?: Date;
   category?: CategoryType;
   categoryId?: number;
 };

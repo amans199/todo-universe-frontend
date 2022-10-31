@@ -46,3 +46,15 @@ export const axiosHeaders = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
+
+export const formatDate = (date: Date) => {
+  const dateConstructed = new Date(date);
+  const year = dateConstructed.getFullYear();
+  const month = dateConstructed.getMonth() + 1;
+  const day = dateConstructed.getDate();
+  const hours = dateConstructed.getHours();
+  const minutes = dateConstructed.getMinutes();
+  const seconds = dateConstructed.getSeconds();
+  // display in a human readable way
+  return `${day}/${month}/${year} at ${hours}:${minutes}:${seconds}`;
+};

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { axiosHeaders } from "../utils";
 import axios from "../utils/axios";
 
 type Category = {
@@ -14,11 +15,6 @@ type CategorySearchParams = {
   description?: string;
   color?: string;
   [key: string]: any;
-};
-const axiosHeaders = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
 };
 
 export const CategoryApp = () => {

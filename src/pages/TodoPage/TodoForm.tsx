@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useState } from "react";
 import { TodoType, CategoryType, TodosFiltersType } from "../../types";
 import { axiosHeaders } from "../../utils";
@@ -12,11 +12,14 @@ export const TodoFormComponent = ({
 }) => {
   const [title, setTitle] = useState<string>("");
   const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
+  const [remindAt, setRemindAt] = useState<string>("");
 
   const createTodo = async () => {
-    await axios.post("/Todos", { title, categoryId }, axiosHeaders);
+    await axios.post("/Todos", { title, categoryId, remindAt }, axiosHeaders);
     getAllTodos();
     setTitle("");
+    setCategoryId(undefined);
+    setRemindAt("");
   };
 
   return (
@@ -38,7 +41,7 @@ export const TodoFormComponent = ({
         className="w-full border p-2 "
         onChange={(e) => setCategoryId(e.target.value as any)}
       >
-        <option value="">All</option>
+        <option value="">UnCategorized</option>
         {allCategories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
@@ -46,6 +49,18 @@ export const TodoFormComponent = ({
         ))}
       </select>
 
+      <input
+        className="w-full px-4 py-2 border rounded-lg"
+        type="datetime-local"
+        placeholder="Remind At"
+        value={remindAt}
+        onChange={(e) => setRemindAt(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            createTodo();
+          }
+        }}
+      />
       <div className="flex space-x-4">
         <button
           className="px-4 py-2 text-white bg-blue-500 rounded-lg disabled:opacity-50"
