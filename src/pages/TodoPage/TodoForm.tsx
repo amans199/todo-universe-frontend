@@ -12,14 +12,14 @@ export const TodoFormComponent = ({
 }) => {
   const [title, setTitle] = useState<string>("");
   const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
-  const [remindAt, setRemindAt] = useState<string>("");
+  const [remindAt, setRemindAt] = useState<string | undefined>(undefined);
 
   const createTodo = async () => {
     await axios.post("/Todos", { title, categoryId, remindAt }, axiosHeaders);
     getAllTodos();
     setTitle("");
     setCategoryId(undefined);
-    setRemindAt("");
+    setRemindAt(undefined);
   };
 
   return (
